@@ -1,12 +1,9 @@
-const { authenticate } = require('feathers-authentication').hooks;
-const { when, discard } = require('feathers-hooks-common');
-
 const { hashPassword } = require('feathers-authentication-local').hooks;
+const { when, discard } = require('feathers-hooks-common');
 
 module.exports = {
   before: {
     all: [
-      when(hook => hook.method !== 'create', authenticate('jwt'))
     ],
     find: [ ],
     get: [ ],
