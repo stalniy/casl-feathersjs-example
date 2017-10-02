@@ -37,12 +37,17 @@ module.exports = function authorize(name = null) {
     const service = name ? hook.app.service(name) : hook.service
     const serviceName = name || hook.path
     const ability = defineAbilitiesFor(hook.params.user)
+    const throwUnlessCan = (action, resource) => {
+      if (ability.cannot(action, resource)) {
+        throw new Forbidden(`You are not allowed to ${action} ${serviceName}`)
+      }
+    }
 
     hook.params.ability = ability
 
     if (hook.method === 'create') {
       hook.data[TYPE_KEY] = serviceName
-      ability.throwUnlessCan('create', hook.data)
+      throwUnlessCan('create', hook.data)
     }
 
     if (!hook.id) {
@@ -67,10 +72,7 @@ module.exports = function authorize(name = null) {
     const result = await service.get(hook.id, params)
 
     result[TYPE_KEY] = serviceName
-
-    if (ability.cannot(action, result)) {
-      throw new Forbidden(`You are not allowed to ${action} ${serviceName}`)
-    }
+    throwUnlessCan('create', result)
 
     if (action === 'get') {
       hook.result = result
