@@ -72,7 +72,7 @@ module.exports = function authorize(name = null) {
     const result = await service.get(hook.id, params)
 
     result[TYPE_KEY] = serviceName
-    throwUnlessCan('get', result)
+    throwUnlessCan(action, result)
 
     if (action === 'get') {
       hook.result = result
