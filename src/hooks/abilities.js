@@ -1,4 +1,5 @@
-const { AbilityBuilder, Ability, toMongoQuery } = require('casl')
+const { AbilityBuilder, Ability } = require('@casl/ability')
+const { toMongoQuery } = require('@casl/mongoose')
 const { Forbidden } = require('feathers-errors')
 const TYPE_KEY = Symbol.for('type')
 

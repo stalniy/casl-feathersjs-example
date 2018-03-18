@@ -30,7 +30,8 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
-    "casl": "^0.3.4",
+    "@casl/ability": "^2.0.0-alpha.ade5be4a",
+    "@casl/mongoose": "2.0.0-alpha.ade5be4a",
     "compression": "^1.7.0",
     "cors": "^2.8.4",
     "feathers": "^2.1.7",
