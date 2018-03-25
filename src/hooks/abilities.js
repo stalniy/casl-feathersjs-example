@@ -18,6 +18,7 @@ function subjectName(subject) {
 function defineAbilitiesFor(user) {
   const { rules, can } = AbilityBuilder.extract()
 
+  can('create',['users'])
   can('read', ['posts', 'comments'])
 
   if (user) {

@@ -5,12 +5,15 @@ const cors = require('cors');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 
-const feathers = require('feathers');
-const configuration = require('feathers-configuration');
-const hooks = require('feathers-hooks');
-const rest = require('feathers-rest');
+const feathers = require('@feathersjs/feathers');
+const configuration = require('@feathersjs/configuration');
+const express = require('@feathersjs/express');
+//const hooks = require('@feathersjs/hooks');
+//const rest = require('@feathersjs/rest');
+const socketio = require('@feathersjs/socketio');
 
-const primus = require('feathers-primus');
+
+//const primus = require('feathers-primus');
 const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
 
@@ -22,11 +25,13 @@ const authentication = require('./authentication');
 
 const mongoose = require('./mongoose');
 
-const app = feathers();
+const app = express(feathers());
+//const app = feathers();
 
 // Load app configuration
 app.configure(configuration());
 // Enable CORS, security, compression, favicon and body parsing
+
 app.use(cors());
 app.use(helmet());
 app.use(compress());
@@ -34,14 +39,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
-app.use('/', feathers.static(app.get('public')));
+//app.use('/', feathers.static(app.get('public')));
+app.use('/', express.static(app.get('public')));
+
+
+app.configure(express.rest());
+app.configure(socketio());
 
 // Set up Plugins and providers
-app.configure(hooks());
+//app.configure(hooks());
 app.configure(mongoose);
-app.configure(rest());
+//app.configure(rest());
 
-app.configure(primus({ transformer: 'websockets' }));
+//app.configure(primus({ transformer: 'websockets' }));
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
 app.configure(authentication);

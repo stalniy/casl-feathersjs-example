@@ -1,4 +1,4 @@
-const { hashPassword } = require('feathers-authentication-local').hooks;
+const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks;
 const { when, discard } = require('feathers-hooks-common');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
 
   after: {
     all: [
-      when(hook => hook.params.provider, discard('password'))
+      protect('password')
     ],
     find: [],
     get: [],
