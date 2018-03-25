@@ -23,7 +23,7 @@ module.exports = function () {
 
   service.hooks(hooks);
 
-  if (service.filter) {
-    service.filter(filters);
-  }
+  // if (service.filter) {
+  //   service.filter(filters);
+  // }
 };
