@@ -29,8 +29,8 @@
     "mocha": "mocha test/ --recursive"
   },
   "dependencies": {
-    "@casl/ability": "^2.0.0-alpha.ade5be4a",
-    "@casl/mongoose": "2.0.0-alpha.ade5be4a",
+    "@casl/ability": "^2.0.1",
+    "@casl/mongoose": "2.0.1",
     "@feathersjs/authentication": "^2.1.3",
     "@feathersjs/authentication-jwt": "^2.0.0",
     "@feathersjs/authentication-local": "^1.1.0",
@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "eslint": "^4.19.1",
-    "mocha": "^3.5.3",
+    "mocha": "^5.0.0",
     "nodemon": "^1.17.2",
     "request": "^2.85.0",
     "request-promise": "^4.2.2"
