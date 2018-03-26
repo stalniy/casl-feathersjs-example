@@ -8,14 +8,11 @@ const bodyParser = require('body-parser');
 const feathers = require('@feathersjs/feathers');
 const configuration = require('@feathersjs/configuration');
 const express = require('@feathersjs/express');
-//const hooks = require('@feathersjs/hooks');
-//const rest = require('@feathersjs/rest');
 const socketio = require('@feathersjs/socketio');
 
 
-//const primus = require('feathers-primus');
-const handler = require('feathers-errors/handler');
-const notFound = require('feathers-errors/not-found');
+const handler = require('@feathersjs/errors/handler');
+const notFound = require('@feathersjs/errors/not-found');
 
 const middleware = require('./middleware');
 const services = require('./services');

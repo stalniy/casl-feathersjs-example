@@ -1,6 +1,6 @@
 const { AbilityBuilder, Ability } = require('@casl/ability')
 const { toMongoQuery } = require('@casl/mongoose')
-const { Forbidden } = require('feathers-errors')
+const { Forbidden } = require('@feathersjs/errors')
 const TYPE_KEY = Symbol.for('type')
 
 Ability.addAlias('update', 'patch')
@@ -18,12 +18,15 @@ function subjectName(subject) {
 function defineAbilitiesFor(user) {
   const { rules, can } = AbilityBuilder.extract()
 
-  can('create',['users'])
   can('read', ['posts', 'comments'])
 
   if (user) {
     can('manage', ['posts', 'comments'], { author: user._id })
     can(['read', 'update'], 'users', { _id: user._id })
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
+    can('create', ['users'])
   }
 
   return new Ability(rules, { subjectName })
