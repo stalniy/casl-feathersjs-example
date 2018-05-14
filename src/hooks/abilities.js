@@ -57,8 +57,7 @@ module.exports = function authorize(name = null) {
     }
 
     if (!hook.id) {
-      const rules = ability.rulesFor(action, serviceName)
-      const query = toMongoQuery(rules)
+      const query = toMongoQuery(ability, serviceName, action)
 
       if (canReadQuery(query)) {
         Object.assign(hook.params.query, query)
