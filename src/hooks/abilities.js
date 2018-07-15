@@ -5,7 +5,7 @@ const TYPE_KEY = Symbol.for('type')
 
 Ability.addAlias('update', 'patch')
 Ability.addAlias('read', ['get', 'find'])
-Ability.addAlias('remove', 'delete')
+Ability.addAlias('delete', 'remove')
 
 function subjectName(subject) {
   if (!subject || typeof subject === 'string') {
