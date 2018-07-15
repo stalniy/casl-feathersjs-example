@@ -39,22 +39,22 @@
     "@feathersjs/express": "^1.2.0",
     "@feathersjs/feathers": "^3.1.3",
     "@feathersjs/socketio": "^3.2.0",
-    "body-parser": "^1.17.2",
-    "compression": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.2",
     "cors": "^2.8.4",
     "feathers-hooks-common": "^4.10.0",
     "feathers-mongoose": "^6.1.0",
-    "helmet": "^3.8.0",
+    "helmet": "^3.12.1",
     "mongoose": "^4.11.4",
-    "serve-favicon": "^2.4.3",
+    "serve-favicon": "^2.5.0",
     "winston": "^2.3.1",
     "ws": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "mocha": "^5.0.0",
-    "nodemon": "^1.17.2",
-    "request": "^2.85.0",
+    "nodemon": "^1.18.2",
+    "request": "^2.87.0",
     "request-promise": "^4.2.2"
   }
 }
