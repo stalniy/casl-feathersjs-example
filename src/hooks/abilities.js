@@ -52,27 +52,44 @@ module.exports = function authorize(name = null) {
     hook.params.ability = ability
 
     if (hook.method === 'create') {
-      hook.data[TYPE_KEY] = serviceName
-      throwUnlessCan('create', hook.data)
+      if (Array.isArray(ctx.data) && ctx.data[0]) {
+        ctx.data[0][TYPE_KEY] = ctx.path
+        throwUnlessCan('create', ctx.data[0])
+        delete ctx.data[0][TYPE_KEY]
+      } else {
+        ctx.data[TYPE_KEY] = ctx.path
+        throwUnlessCan('create', ctx.data)
+        delete ctx.data[TYPE_KEY]
+      }
     }
 
     if (!hook.id) {
-      const query = toMongoQuery(ability, serviceName, action)
+      let query = toMongoQuery(ability, serviceName, action)
+        
+      // query optimization [https://github.com/stalniy/casl/issues/30]
+      // if there only one condition don't use $or
+      if (
+        query
+        && typeof query === 'object'
+        && !Array.isArray(query)
+        && Object.keys(query).length === 1
+        && Array.isArray(query.$or)
+        && query.$or.length === 1
+      ) {
+        [query] = query.$or
+      }
 
       if (canReadQuery(query)) {
         Object.assign(hook.params.query, query)
       } else {
-        // The only issue with this is that user will see total amount of records in db
-        // for the resources which he shouldn't know.
-        // Alternative solution is to assign `__nonExistingField` property to query
-        // but then feathers-mongoose will send a query to MongoDB which for sure will return empty result
-        // and may be quite slow for big datasets
-        hook.params.query.$limit = 0
+        hook.result = {}
       }
 
       return hook
     }
 
+    // TODO: make sure if params.query.$select is defined
+    // it should include fields defined in the rule, orherwise it won't work proparly 
     const params = Object.assign({}, hook.params, { provider: null })
     const result = await service.get(hook.id, params)
 
@@ -80,6 +97,7 @@ module.exports = function authorize(name = null) {
     throwUnlessCan(action, result)
 
     if (action === 'get') {
+      delete result[TYPE_KEY]
       hook.result = result
     }
 
