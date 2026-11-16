@@ -1,5 +1,7 @@
 # Example of CASL integration in Feathersjs app
 
+**DEPRECATED:** visit [CASL Feathers Blog](https://github.com/stalniy/casl-examples/tree/master/packages/feathersjs-blog) to see the updated example
+
 Read [CASL in Feathersjs app][casl-feathers-example] for details.
 
 [CASL](https://stalniy.github.io/casl/) is an isomorphic authorization JavaScript library which restricts what resources a given user is allowed to access.
